@@ -1,5 +1,5 @@
 <template>
-<div class="apply">
+  <div class="apply">
     <fixed-bar class="welcome">欢迎入驻!</fixed-bar>
     <div class="container">
       <div class="apply-form">
@@ -9,21 +9,33 @@
         <div class="page-content">
           <form>
             <label class="box account">
-              <input type="text" name="" placeholder="社团名称">
+              <input type="text" name="" placeholder="社团名称" v-model="form.teamname">
             </label>
             <label class="box user-name">
               <input type="text" name="" placeholder="社长姓名">
             </label>
             <label class="box password">
-              <input type="text" name="" placeholder="社团宣言">
+              <input type="text" name="" placeholder="社团宣言" v-model="form.introduction">
             </label>
             <label class="box password-repeat">
               <textarea type="password" name="" rows=3 cols=41 placeholder="申请理由"></textarea>
             </label>
+            <label class="upload">
+              <el-upload
+                class="upload-demo"
+                action="api/upload"
+                :on-success="onSuccess"
+                :on-preview="handlePreview"
+                :on-remove="handleRemove"
+                :before-remove="beforeRemove"
+                multiple
+                :limit="1"
+                :on-exceed="onExceed">
+                <el-button size="small" type="primary">点击上传</el-button>
+              </el-upload>
+            </label>
             <label class="box submit">
-              <router-link :to="{name: 'Home'}">
-                <input type="submit" name="" value="提交">
-              </router-link>
+              <input @click="save" type="submit" name="" value="提交">
             </label>
           </form>
         </div>
@@ -39,6 +51,7 @@
 <script>
 import FixedBar from '@/components/Bars/FixedBar'
 import AppFooter from '@/components/MainPage/AppFooter'
+import request from '../utils/requests'
 
 export default {
   name: 'Apply',
@@ -48,7 +61,35 @@ export default {
   },
   data () {
     return {
+      form: {}
     }
+  },
+  methods: {
+    save () {
+      request.post('/insertTeam', this.form).then(res => {
+        console.log(res)
+        if (res.code === 200) {
+          this.$message.success('创建成功')
+          this.$router.push('/home')
+        } else {
+          this.$message.error('创建失败')
+        }
+      })
+    },
+    onExceed (file, fileList) {
+      this.$message.error('最多添加一张图片')
+    },
+    onSuccess (response, file, fileList) {
+      this.$message.success('上传成功')
+      this.form.picture = file.name
+      this.form.leader = window.sessionStorage.getItem('id')
+    },
+    handleRemove (file, fileList) {
+      this.form.picture = ''
+    },
+    handlePreview (file) {
+      console.log(file)
+    },
   }
 }
 </script>
@@ -58,14 +99,15 @@ export default {
   color: #666;
   height: 440px;
 }
+
 .apply .container {
   width: 1200px;
-  height: 100%;
   margin: 0 auto;
   position: relative;
   padding-top: 100px;
   /*background-color: red;*/
 }
+
 .apply .container .side-image {
   height: 400px;
   width: 400px;
@@ -74,6 +116,7 @@ export default {
   right: 40px;
   /*border: 1px solid #eee;*/
 }
+
 .apply .container .side-image img {
   height: 400px;
   width: 400px;
@@ -83,10 +126,11 @@ export default {
 .apply .container .apply-form {
   /*background-color: #eee;*/
   /*margin: 0px auto;*/
-  margin-left: 100px;
+  margin-left: 80px;
   margin-top: 0px;
-  width: 560px;
-  height: 400px;
+  margin-bottom: 50px;
+  width: 600px;
+  height: 500px;
   box-shadow: 0 2px 10px #aaa;
   position: relative;
 }
@@ -112,8 +156,9 @@ export default {
   background-position: 8px;
   background-size: 20px;
   background-repeat: no-repeat;
-  left: 130px;
+  left: 110px;
 }
+
 .apply .page-content .box input {
   height: 36px;
   width: 298px;
@@ -127,26 +172,45 @@ export default {
   top: 0;
   font-size: 14px;
 }
-.apply .page-content .box textarea{
+
+.apply .page-content .box textarea {
   font-size: 14px;
   resize: none;
+  width: 298px;
 }
+
 .apply .page-content .account {
   top: 60px;
 }
+
 .apply .page-content .user-name {
   top: 120px;
 }
+
 .apply .page-content .password {
   top: 180px;
 }
+
 .apply .page-content .password-repeat {
   top: 240px;
 }
+
+.upload-demo {
+  position: relative;
+  left: 110px;
+  top: 270px;
+  width: 298px;
+}
+
+.el-upload--picture-card {
+  width: 200px;
+}
+
 .apply .page-content .submit {
-  top: 320px;
+  top: 400px;
   background-color: #fff;
 }
+
 .apply .page-content .submit input {
   width: 299px;
   left: 0px;
@@ -154,6 +218,7 @@ export default {
   background-color: #12ab34;
   color: #fff;
 }
+
 .apply .page-content .submit input:hover {
   cursor: pointer;
   opacity: 0.9;

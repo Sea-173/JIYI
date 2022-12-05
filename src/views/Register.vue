@@ -63,10 +63,10 @@ export default {
     register () {
       request.post('/register', this.form).then(res => {
         if (res.code === 400) {
-          alert('error')
+          this.$message.error('注册失败')
         } else {
           console.log('success')
-          alert('success')
+          this.$message.success('注册成功')
           this.$router.push('/')
         }
       })

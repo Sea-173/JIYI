@@ -66,7 +66,7 @@ export default {
       console.log(this.form)
       request.post('/login', this.form).then(res => {
         if (res.id === 'error') {
-          alert('账号或密码错误')
+          this.$message.error('账号或密码错误')
         } else {
           console.log('success')
           window.sessionStorage['name'] = res.name
