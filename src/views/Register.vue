@@ -9,15 +9,15 @@
         <div class="page-content">
           <form>
             <label class="box account">
-              <input id="mailbox" type="text" name="" placeholder="邮箱" @change="regMailbox">
+              <input id="mailbox" type="text" name="" placeholder="手机号" @change="regMailbox" v-model="form.phone">
             </label>
             <span id="regMailbox"></span>
             <label class="box user-name">
-              <input id='userName' type="text" name="" placeholder="用户名" @change="regName">
+              <input id='userName' type="text" name="" placeholder="用户名" @change="regName" v-model="form.name">
             </label>
             <span id="regName"></span>
             <label class="box password">
-              <input id="pwd" type="password" name="" placeholder="6-20位数字、符号或数字" @change="regPwd">
+              <input id="pwd" type="password" name="" placeholder="6-20位数字、符号或数字" @change="regPwd" v-model="form.pass">
             </label>
             <span id="regPwd"></span>
             <label class="box password-repeat">
@@ -25,9 +25,7 @@
             </label>
             <span id="regSurePwd"></span>
             <label class="box submit">
-              <router-link :to="{name: 'Login'}">
-                <input type="submit" name="" value="注册">
-              </router-link>
+                <input type="submit" name="" value="注册" @click="register">
             </label>
             <label class="have-account">已有账户？
               <router-link :to="{name: 'Login'}" tag="label"
@@ -48,6 +46,7 @@
 <script>
 import FixedBar from '@/components/Bars/FixedBar'
 import AppFooter from '@/components/MainPage/AppFooter'
+import request from '../utils/requests'
 
 export default {
   name: 'register',
@@ -56,9 +55,22 @@ export default {
     'app-footer': AppFooter
   },
   data () {
-    return {}
+    return {
+      form: {}
+    }
   },
   methods: {
+    register () {
+      request.post('/register', this.form).then(res => {
+        if (res.code === 400) {
+          alert('error')
+        } else {
+          console.log('success')
+          alert('success')
+          this.$router.push('/')
+        }
+      })
+    },
     regName: function () {
       var userName = document.getElementById('userName').value
 
@@ -97,13 +109,13 @@ export default {
 
     regMailbox: function () {
       var mailbox = document.getElementById('mailbox').value
-      var var4 = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
+      var var4 = /^[0-9]{8,15}/
       if (var4.test(mailbox)) {
         //邮箱
         document.getElementById('regMailbox').innerText = '正确'
         document.getElementById('regMailbox').style.color = 'green'
       } else {
-        document.getElementById('regMailbox').innerText = '请输入邮箱格式'
+        document.getElementById('regMailbox').innerText = '请输入手机号格式'
         document.getElementById('regMailbox').style.color = 'red'
       }
     }
