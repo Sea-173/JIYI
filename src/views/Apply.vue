@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     save () {
-      request.post('/insertTeam', this.form).then(res => {
+      request.post('/TE/insertTeam', this.form).then(res => {
         console.log(res)
         if (res.code === 200) {
           this.$message.success('创建成功')

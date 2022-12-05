@@ -64,11 +64,12 @@ export default {
   methods: {
     login: function () {
       console.log(this.form)
-      request.post('/login', this.form).then(res => {
+      request.post('/LR/login', this.form).then(res => {
         if (res.id === 'error') {
           this.$message.error('账号或密码错误')
         } else {
           console.log('success')
+          this.$message.success('登陆成功')
           window.sessionStorage['name'] = res.name
           window.sessionStorage['id'] = res.id
           this.$router.push('/home')

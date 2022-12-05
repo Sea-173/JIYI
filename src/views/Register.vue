@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     register () {
-      request.post('/register', this.form).then(res => {
+      request.post('/LR/register', this.form).then(res => {
         if (res.code === 400) {
           this.$message.error('注册失败')
         } else {
