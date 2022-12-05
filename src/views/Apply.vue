@@ -27,8 +27,6 @@
                 :on-success="onSuccess"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
-                :before-remove="beforeRemove"
-                multiple
                 :limit="1"
                 :on-exceed="onExceed">
                 <el-button size="small" type="primary">点击上传</el-button>
