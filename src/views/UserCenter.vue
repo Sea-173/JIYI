@@ -1,6 +1,6 @@
 <template>
   <div id="user-center">
-  	<!-- 快捷栏 -->
+      <!-- 快捷栏 -->
 	<shortcut-bar class="shortcut-bar"></shortcut-bar>
 	<!-- 头部 -->
 	<fixed-bar :class="{'header-fixed': isHeaderFixed}" class="header-fixed-bar">
@@ -12,7 +12,7 @@
 			<!-- 左侧选项栏 -->
 			<div class="side-bar">
 				<ul class="side-nav">
-					<li v-for="item in itemNav">
+					<li v-for="item in itemNav" v-bind:key="item">
 						<span
 							:class="{active: isActiveBar(item.index)}"
 							@click="selectItem(item)">
@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     isActiveBar: function (index) {
-      return index == this.currentActiveNavIndex
+      return index === this.currentActiveNavIndex
     },
     selectItem: function (item) {
       this.currentActiveNavIndex = item.index

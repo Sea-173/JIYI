@@ -10,7 +10,7 @@
 			</div>
 			<div class="wallet">
 				<div class="common-title">我的钱包</div>
-				<div v-for="value in wallet">
+				<div v-for="value in wallet" :key="value">
 					<p class="num"><span>{{ value.num }}</span></p>
 					<p class="item">{{ value.item }}</p>
 				</div>
@@ -19,8 +19,8 @@
 		<div class="record">
 			<div class="my-order">
 				<div class="common-title">我的订单</div>
-				<div v-for="value in order"
-					:class="{active: value.index==hoverOrderIndex}"
+				<div v-for="value in order" :key="value"
+					:class="{active: value.index===hoverOrderIndex}"
 					@mouseenter="hoverOrderIndex = value.index"
 					@mouseleave="hoverOrderIndex = null">
 					<span class="order-icon"
@@ -32,7 +32,7 @@
 			</div>
 			<div class="my-interest">
 				<div class="common-title">我的关注</div>
-				<div v-for="value in interest">
+				<div v-for="value in interest" :key="value">
 					<p class="num"><span>{{ value.num }}<span class="hot">{{ value.hot }}</span></span></p>
 					<p class="item">{{ value.item }}</p>
 				</div>
@@ -48,25 +48,25 @@ export default {
     return {
     	user: {
     		name: '张三',
-    		account: '2252666@tonngji.edu.cn',
+    		account: '2252666@tonngji.edu.cn'
     		// avatarLink: ,
     	},
     	wallet: [
     		{
     			index: 0,
     			item: '优惠券',
-    			num: 2,
+    			num: 2
     		},
     		{
     			index: 1,
     			item: '积分',
-    			num: 392,
+    			num: 392
     		},
     		{
     			index: 2,
     			item: '红包',
-    			num: 5,
-    		},
+    			num: 5
+    		}
     	],
     	order: [
     		{
@@ -74,34 +74,34 @@ export default {
     			item: '待付款',
     			num: 1,
     			iconPosition: '2px -244px',
-    			activeIconPosition: '2px -307px',
+    			activeIconPosition: '2px -307px'
     		},
     		{
     			index: 1,
     			item: '待收货',
     			num: 0,
     			iconPosition: '-96px -246px',
-    			activeIconPosition: '-96px -309px',
+    			activeIconPosition: '-96px -309px'
     		},
     		{
     			index: 2,
     			item: '待评价',
     			num: 2,
     			iconPosition: '-197px -246px',
-    			activeIconPosition: '-197px -309px',
+    			activeIconPosition: '-197px -309px'
     		},
     		{
     			index: 3,
     			item: '退换/售后',
     			num: 1,
     			iconPosition: '-297px -247px',
-    			activeIconPosition: '-297px -310px',
+    			activeIconPosition: '-297px -310px'
     		},
     		{
     			index: 4,
     			item: '全部订单',
     			iconPosition: '-399px -247px',
-    			activeIconPosition: '-399px -310px',
+    			activeIconPosition: '-399px -310px'
     		}
     	],
     	hoverOrderIndex: null,
@@ -110,7 +110,7 @@ export default {
     			index: 0,
     			item: '商品关注',
     			num: 16,
-    			hot: '7个降价',
+    			hot: '7个降价'
     		},
     		{
     			index: 1,
@@ -122,23 +122,23 @@ export default {
     			index: 2,
     			item: '商品收藏',
     			num: 8,
-    			hot: '3个降价',
-    		},
-    	],
+    			hot: '3个降价'
+    		}
+    	]
     }
   },
   methods: {
   	//
   	// 获取order icon的位置参数
   	getOrderIconPosition: function (value) {
-  		if (value.index == this.hoverOrderIndex) {
-  			return value.activeIconPosition;
+  		if (value.index === this.hoverOrderIndex) {
+  			return value.activeIconPosition
   		} else {
-  			return value.iconPosition;
+  			return value.iconPosition
   		}
-  	},
+  	}
   }
-};
+}
 </script>
 
 <style scoped>
