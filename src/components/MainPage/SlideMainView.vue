@@ -12,56 +12,56 @@
 </template>
 
 <script>
-	import SlideBase from '@/components/MainPage/SlideBase'
+import SlideBase from '@/components/MainPage/SlideBase'
 
-	export default {
-		name: 'SlideMainView',
-		props: [],
-		data () {
-			return {
-				offset: -840,
-				slideInfo: {
-					slideNum: 4,
-					playInterval: 3000,
-					width: 840,
-					height: 420,
-					isAutoPlay: true,
-				},
-				slideContent: [
-					{
-						index: 0,
-						name: '1.jpg'
-					},
-					{
-						index: 1,
-						name: '2.jpg'
-					},
-					{
-						index: 2,
-						name: '3.jpg'
-					},
-					{
-						index: 3,
-						name: '4.jpg'
-					},
-				]
-			}
-		},
-		components: {
-			'slide-base': SlideBase,
-		},
-		methods: {
-			// 获取轮播图路径
-			getSlideImgPath: function (name) {
-				// return 'url(' + require('../assets/main-view-slide-img/' + name + '.jpg') + ')';
-				return require('../../assets/img/main-view/' + name) ;
-			},
-			updateOffset: function ($event) {
-				this.offset = $event;
-				// console.log($event);
-			},
-		}
-	};
+export default {
+  name: 'SlideMainView',
+  props: [],
+  data () {
+    return {
+      offset: -840,
+      slideInfo: {
+        slideNum: 4,
+        playInterval: 3000,
+        width: 840,
+        height: 420,
+        isAutoPlay: true
+      },
+      slideContent: [
+        {
+          index: 0,
+          name: '1.jpg'
+        },
+        {
+          index: 1,
+          name: '2.jpg'
+        },
+        {
+          index: 2,
+          name: '3.jpg'
+        },
+        {
+          index: 3,
+          name: '4.jpg'
+        }
+      ]
+    }
+  },
+  components: {
+    'slide-base': SlideBase
+  },
+  methods: {
+    // 获取轮播图路径
+    getSlideImgPath: function (name) {
+      // return 'url(' + require('../assets/main-view-slide-img/' + name + '.jpg') + ')';
+      return require('../../assets/img/main-view/' + name)
+    },
+    updateOffset: function ($event) {
+      this.offset = $event
+      // console.log($event);
+    }
+  }
+}
 </script>
 
 <style scoped>

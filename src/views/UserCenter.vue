@@ -85,6 +85,11 @@ export default {
           index: 6,
           title: '售后服务',
           name: 'AfterSale'
+        },
+        {
+          index: 7,
+          title: '发布商品',
+          name: 'ReleaseCommodity'
         }
       ]
     }
@@ -164,7 +169,7 @@ export default {
 	}
 	/* 右边导航栏 */
 	#user-center .main-view .side-bar {
-		height: 320px;
+		height: 350px;
 		width: 160px;
 		box-sizing: border-box;
 		position: absolute;

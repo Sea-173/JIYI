@@ -21,7 +21,7 @@ import UserCenterTemp from '@/components/UserCenter/UserCenterTemp'
 export default {
   name: 'MyWallet',
   components: {
-  	'user-center-temp': UserCenterTemp,
+  	'user-center-temp': UserCenterTemp
   },
   data () {
     return {
@@ -32,49 +32,49 @@ export default {
     			item: '优惠券',
     			unit: '张',
     			showNum: 2,
-    			num: 2,
+    			num: 2
     		},
     		{
     			index: 1,
     			item: '礼品卡',
     			unit: '张',
     			showNum: 5,
-    			num: 5,
+    			num: 5
     		},
     		{
     			index: 2,
     			item: '红包',
     			unit: '个',
     			showNum: 3,
-    			num: 3,
+    			num: 3
     		},
     		{
     			index: 3,
     			item: '积分',
     			unit: '',
     			showNum: 199,
-    			num: 392,
-    		},
+    			num: 392
+    		}
     	],
     	afterSaleList: [
     		{
-    			index: 0,
-    		},
-    	],
+    			index: 0
+    		}
+    	]
     }
   },
   computed: {
   	currentItem: function () {
-  		return this.myWalletCategory[this.activeIndex];
-  	},
+  		return this.myWalletCategory[this.activeIndex]
+  	}
   },
   methods: {
   	changeActiveIndex: function (index) {
-  		this.activeIndex = index;
+  		this.activeIndex = index
   		// this.countOrderShowedNum();
-  	},
+  	}
   }
-};
+}
 </script>
 
 <style scoped>

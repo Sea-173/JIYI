@@ -41,13 +41,12 @@ import UserCenterTemp from '@/components/UserCenter/UserCenterTemp'
 import FocusProductListBase from '@/components/UserCenter/FocusProductListBase'
 import MyClub from '@/components/UserCenter/Myclub'
 
-
 export default {
   name: 'MyFocus',
   components: {
     'user-center-temp': UserCenterTemp,
     'product-list': FocusProductListBase,
-    'my-club': MyClub,
+    'my-club': MyClub
 
   },
   data () {
@@ -58,23 +57,23 @@ export default {
         {
           index: 0,
           item: '我的收藏夹',
-          showNum: 0,
+          showNum: 0
         },
         {
           index: 1,
           item: '关注的商品',
-          showNum: 0,
+          showNum: 0
         },
         {
           index: 2,
           item: '关注的社团',
-          showNum: 0,
+          showNum: 0
         },
         {
           index: 3,
           item: '关注的社团活动',
-          showNum: 0,
-        },
+          showNum: 0
+        }
       ],
       focusList: [
         {
@@ -84,7 +83,7 @@ export default {
           originalPrice: 20.90,
           currentPrice: 19.90,
           commentNum: 14,
-          favorableRate: 98,
+          favorableRate: 98
         },
         {
           index: 1,
@@ -93,7 +92,7 @@ export default {
           originalPrice: 59.90,
           currentPrice: 59.90,
           commentNum: 14,
-          favorableRate: 98,
+          favorableRate: 98
         },
         {
           index: 2,
@@ -102,7 +101,7 @@ export default {
           originalPrice: 5099.90,
           currentPrice: 5099.00,
           commentNum: 11,
-          favorableRate: 98,
+          favorableRate: 98
         },
         {
           index: 3,
@@ -111,7 +110,7 @@ export default {
           originalPrice: 59.90,
           currentPrice: 48.60,
           commentNum: 13,
-          favorableRate: 98,
+          favorableRate: 98
         },
         {
           index: 4,
@@ -120,7 +119,7 @@ export default {
           originalPrice: 48.90,
           currentPrice: 48.90,
           commentNum: 11,
-          favorableRate: 98,
+          favorableRate: 98
         },
         {
           index: 5,
@@ -129,8 +128,8 @@ export default {
           originalPrice: 45.90,
           currentPrice: 42.90,
           commentNum: 12,
-          favorableRate: 98,
-        },
+          favorableRate: 98
+        }
       ],
       favoriteList: [
         {
@@ -140,7 +139,7 @@ export default {
           originalPrice: 97.90,
           currentPrice: 96.90,
           commentNum: 13,
-          favorableRate: 98,
+          favorableRate: 98
         },
         {
           index: 1,
@@ -149,7 +148,7 @@ export default {
           originalPrice: 68.90,
           currentPrice: 66.90,
           commentNum: 10,
-          favorableRate: 98,
+          favorableRate: 98
         },
         {
           index: 2,
@@ -158,7 +157,7 @@ export default {
           originalPrice: 69.90,
           currentPrice: 59.90,
           commentNum: 14,
-          favorableRate: 98,
+          favorableRate: 98
         },
         {
           index: 3,
@@ -167,7 +166,7 @@ export default {
           originalPrice: 69.90,
           currentPrice: 69.90,
           commentNum: 11,
-          favorableRate: 98,
+          favorableRate: 98
         },
         {
           index: 4,
@@ -176,7 +175,7 @@ export default {
           originalPrice: 59.90,
           currentPrice: 58.00,
           commentNum: 12,
-          favorableRate: 98,
+          favorableRate: 98
         },
         {
           index: 5,
@@ -185,7 +184,7 @@ export default {
           originalPrice: 49.90,
           currentPrice: 46.90,
           commentNum: 15,
-          favorableRate: 97,
+          favorableRate: 97
         },
         {
           index: 6,
@@ -194,8 +193,8 @@ export default {
           originalPrice: 34.80,
           currentPrice: 34.80,
           commentNum: 12,
-          favorableRate: 99,
-        },
+          favorableRate: 99
+        }
 
       ],
       clubList: [
@@ -207,10 +206,10 @@ export default {
           currentPrice: 20.90,
           commentNum: 29014,
           favorableRate: 98,
-          clubActivity:"吉他大赛",
-          activityDate:"2022/06/19",
-          activityLocation:"安楼 101",
-          isApplyed:"√ 已报名"
+          clubActivity: '吉他大赛',
+          activityDate: '2022/06/19',
+          activityLocation: '安楼 101',
+          isApplyed: '√ 已报名'
         },
         {
           index: 1,
@@ -220,11 +219,11 @@ export default {
           currentPrice: 20.90,
           commentNum: 29014,
           favorableRate: 98,
-          clubActivity:"新生杯",
-          activityDate:"2022/06/19",
-          activityLocation:"人工草坪",
-          isApplyed:"+ 去报名"
-        },       {
+          clubActivity: '新生杯',
+          activityDate: '2022/06/19',
+          activityLocation: '人工草坪',
+          isApplyed: '+ 去报名'
+        }, {
           index: 2,
           imageName: '3.png',
           name: '数学社',
@@ -232,39 +231,39 @@ export default {
           currentPrice: 20.90,
           commentNum: 29014,
           favorableRate: 98,
-          clubActivity:"数学建模比赛",
-          activityDate:"2022/06/19",
-          activityLocation:"复楼 119",
-          isApplyed:"√ 已报名"
-        },
-      ],
+          clubActivity: '数学建模比赛',
+          activityDate: '2022/06/19',
+          activityLocation: '复楼 119',
+          isApplyed: '√ 已报名'
+        }
+      ]
     }
   },
   methods: {
     // 获取降价商品数量
     getLowerPriceItems: function (productList) {
-      var tempList = [];
+      var tempList = []
       for (var i = 0; i < productList.length; i++) {
         if (productList[i].currentPrice < productList[i].originalPrice) {
-          tempList.push(productList[i]);
+          tempList.push(productList[i])
         }
       }
-      return tempList;
+      return tempList
     },
     // 改变展示项目的index
     changeActiveIndex: function (index) {
-      this.activeIndex = index;
+      this.activeIndex = index
     },
     // 获取每个选项展示的数字
     countItemsShowNum: function () {
-      this.focusCategory[0].showNum = this.getLowerPriceItems(this.favoriteList).length;
-      this.focusCategory[1].showNum = this.getLowerPriceItems(this.focusList).length;
-    },
+      this.focusCategory[0].showNum = this.getLowerPriceItems(this.favoriteList).length
+      this.focusCategory[1].showNum = this.getLowerPriceItems(this.focusList).length
+    }
   },
   mounted () {
-    this.countItemsShowNum();
-  },
-};
+    this.countItemsShowNum()
+  }
+}
 </script>
 
 <style scoped>

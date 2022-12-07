@@ -9,6 +9,7 @@ import Register from '@/views/Register'
 import Apply from '@/views/Apply'
 import UserCenter from '@/views/UserCenter'
 import UserCenterHome from '@/views/UserCenterHome'
+import ReleaseCommodity from '../components/UserCenter/ReleaseCommodity'
 
 import ShoppingCart from '@/components/UserCenter/ShoppingCart'
 import MyOrder2 from '@/components/UserCenter/MyOrder2'
@@ -25,7 +26,7 @@ export default new Router({
     {
       path: 'message-box',
       name: 'MessageBox',
-      component: MessageBox,
+      component: MessageBox
     },
 
     {
@@ -36,12 +37,12 @@ export default new Router({
     {
       path: '/product-details/:id',
       name: 'ProductDetails',
-      component: ProductDetails,
+      component: ProductDetails
     },
     {
       path: '/club-details/:id',
       name: 'ClubDetails',
-      component: ClubDetails,
+      component: ClubDetails
     },
     {
       path: '/',
@@ -62,47 +63,53 @@ export default new Router({
       path: '/user-center',
       name: 'UserCenter',
       component: UserCenter,
-      redirect: to=> {
+      redirect: to => {
         return '/user-center/user-center-home'
       },
       children: [
-          {
+        {
           	path: 'user-center-home',
           	name: 'UserCenterHome',
-          	component: UserCenterHome,
+          	component: UserCenterHome
 
-          },
+        },
+        {
+          path: 'release-commodity',
+          name: 'ReleaseCommodity',
+          component: ReleaseCommodity
+
+        },
         	{
         		path: 'shopping-cart',
         		name: 'ShoppingCart',
-        		component: ShoppingCart,
+        		component: ShoppingCart
         	},
         	{
         		path: 'my-order2',
         		name: 'MyOrder2',
-        		component: MyOrder2,
+        		component: MyOrder2
         	},
         	{
         		path: 'my-focus',
         		name: 'MyFocus',
-        		component: MyFocus,
+        		component: MyFocus
         	},
         	{
         		path: 'my-wallet',
         		name: 'MyWallet',
-        		component: MyWallet,
+        		component: MyWallet
         	},
         	{
         		path: 'my-message',
         		name: 'MyMessage',
-        		component: MyMessage,
+        		component: MyMessage
         	},
         	{
         		path: 'after-sale',
         		name: 'AfterSale',
-        		component: AfterSale,
-        	},
-      ],
-    },
+        		component: AfterSale
+        	}
+      ]
+    }
   ]
 })
