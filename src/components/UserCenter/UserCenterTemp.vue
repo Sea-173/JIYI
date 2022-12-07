@@ -9,12 +9,12 @@
   	<!-- 2.内容区域 -->
   	<div class="content">
 		<ul class="header-nav">
-			<li v-for="cate in itemCategory" 
-				:class="{active: cate.index == activeIndex}"
+			<li v-for="cate in itemCategory" :key="cate"
+				:class="{active: cate.index === activeIndex}"
 				@click="selectItem(cate.index)">
 				<span class="item">{{ cate.item }}
 				</span>
-				<span class="num" 
+				<span class="num"
 					v-if="cate.showNum"
 					:style="{fontSize:cate.showNum>99?'11px':'13px'}">
 					{{ cate.showNum<99?cate.showNum:'99+' }}
@@ -28,7 +28,6 @@
   </div>
 </template>
 
-
 <script>
 export default {
   name: 'UserCenterTemp',
@@ -40,13 +39,13 @@ export default {
   methods: {
   	// 1.选择查看的项目
   	selectItem: function (index) {
-  		this.$emit('change-active-index', index);
-  	},
+  		this.$emit('change-active-index', index)
+  	}
   },
   mounted () {
-  	this.localActivaIndex = this.activeIndex;
+  	this.localActivaIndex = this.activeIndex
   }
-};
+}
 </script>
 
 <style scoped>
