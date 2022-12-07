@@ -9,16 +9,16 @@
 import ShortcutBar from '@/components/Bars/ShortcutBar'
 import SearchArea from '@/components/MainPage/SearchArea'
 
-	export default {
+export default {
 	  name: 'AppHeader',
 	  components: {
 	  	'shortcut-bar': ShortcutBar,
-	  	'search-area': SearchArea,
+	  	'search-area': SearchArea
 	  },
 	  data () {
 	    return {}
-	  },
-	};
+	  }
+}
 </script>
 
 <style scoped>

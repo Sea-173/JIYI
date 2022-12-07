@@ -87,7 +87,7 @@ export default {
     },
     handlePreview (file) {
       console.log(file)
-    },
+    }
   }
 }
 </script>

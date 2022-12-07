@@ -6,7 +6,7 @@
       </div>
       <div class="fresh-content">
         <ul class="fresh-list">
-          <li v-for="fresh in goodFreshList">
+          <li v-for="fresh in goodFreshList" :key="fresh">
             <div class="temp-container">
               <div class="fresh-img">
                 <img :src="getImagePath(fresh.index)">
@@ -41,58 +41,58 @@ export default {
         {
           index: 0,
           title: '数学社',
-          price: '建模大赛',
+          price: '建模大赛'
         },
         {
           index: 1,
           title: '吉他社',
-          price: '弹唱大赛',
+          price: '弹唱大赛'
 
         },
         {
           index: 2,
           title: '羽球社',
-          price: '羽球比赛',
+          price: '羽球比赛'
 
         },
         {
           index: 3,
           title: '音乐社',
-          price: '纳新活动',
+          price: '纳新活动'
 
         },
         {
           index: 4,
           title: '摄影社',
-          price: '摄影大赛',
+          price: '摄影大赛'
 
         },
         {
           index: 5,
           title: '轮滑社',
-          price: '纳新活动',
+          price: '纳新活动'
         },
         {
           index: 6,
           title: '龙舟社',
-          price: '龙舟大赛',
+          price: '龙舟大赛'
 
         },
         {
           index: 7,
           title: '围棋社',
-          price: '以棋会友',
+          price: '以棋会友'
 
-        },
-      ],
+        }
+      ]
     }
   },
   methods: {
     getImagePath: function (name) {
-      return require('@/assets/img/club-activities/activity-images/' + name +'.jpg');
-    },
+      return require('@/assets/img/club-activities/activity-images/' + name + '.jpg')
+    }
   }
-};
+}
 </script>
 
 <style scoped>

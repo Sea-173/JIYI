@@ -8,10 +8,10 @@
   	</div>
   	<div class="footer-info-container">
   		<ul class="footer-info">
-  			<li v-for="info in footerInfo">
+  			<li v-for="info in footerInfo" :key="info">
   				<p>{{ info.title }}</p>
   				<ul class="footer-items">
-  					<li v-for="item in info.items">
+  					<li v-for="item in info.items" :key="item">
   						<span>{{ item }}</span>
   					</li>
   				</ul>
@@ -27,14 +27,14 @@ import GoodService from '@/components/Goods/GoodService'
 export default {
   name: 'AppFooter',
   components: {
-  	'good-service': GoodService,
+  	'good-service': GoodService
   },
   data () {
     return {
     	goodServiceInfo: {
     		titleColor: 'rgba(18,171,52)',
     		contentColor: 'rgba(18,171,52,0.6)',
-    		iconSuffix: '-active',
+    		iconSuffix: '-active'
     	},
     	footerInfo: [
     		{
@@ -56,7 +56,7 @@ export default {
     	]
     }
   }
-};
+}
 </script>
 
 <style scoped>

@@ -36,23 +36,23 @@ import SideBar from '@/components/Bars/SideBar'
 
 export default {
   name: 'MainView',
-  components:{
+  components: {
   	// 'slide': Slide,
   	'side-bar': SideBar,
   	'club-act': ClubActivities,
   	'good-service': GoodService,
   	'slide-main-view': SlideMainView,
-  	 'slide-seckill': SlideSeckill,
+  	 'slide-seckill': SlideSeckill
   },
   data () {
     return {
-    	goodServiceInfo: {},
+    	goodServiceInfo: {}
     }
-  },
-};
+  }
+}
 </script>
 
-<style scoped>;
+<style scoped>
 	#main-view {
 		box-sizing: border-box;
 		width: 100%;

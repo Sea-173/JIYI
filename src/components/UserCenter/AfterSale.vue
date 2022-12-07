@@ -22,7 +22,7 @@ export default {
   components: {
     'user-center-temp': UserCenterTemp
   },
-  data() {
+  data () {
     return {
       activeIndex: 0,
       afterSaleCategory: [

@@ -83,11 +83,11 @@ import MoreInfo from '@/components/Goods/MoreInfo'
 import products from '../assets/database/products.js'
 import clubs from '../assets/database/club.js'
 export default {
-  name: "ClubDetails",
+  name: 'ClubDetails',
   components: {
     'app-header': AppHeader,
     'app-footer': AppFooter,
-    'more-info': MoreInfo,
+    'more-info': MoreInfo
   },
   data () {
     return {
@@ -99,19 +99,19 @@ export default {
   },
   methods: {
     getClubImgPath: function (name) {
-      return require('../assets/img/club-images/' + name);
+      return require('../assets/img/club-images/' + name)
     },
     getClubInfo: function (id) {
-      return this.allClubs[id-1];
+      return this.allClubs[id - 1]
     },
     getCommodityImgPath: function (name) {
-      return require('../assets/img/commodity-images/'+ name);
-    },
+      return require('../assets/img/commodity-images/' + name)
+    }
   },
   computed: {
     clubInfo: function () {
-      return this.getClubInfo(this.$route.params.id);
-    },
+      return this.getClubInfo(this.$route.params.id)
+    }
   },
   mounted () {
     // console.log(this.recommendedIds);

@@ -8,7 +8,7 @@
         <div class="count-down">
           <p>{{ countDownTitle }}</p>
           <ul class="time">
-            <li v-for="time in countDown" :class="{current: timeTable[currentIndex].isCurrent}">
+            <li v-for="time in countDown" :key="time" :class="{current: timeTable[currentIndex].isCurrent} ">
               <span class="time-number">{{ time }}</span>
             </li>
           </ul>
@@ -30,7 +30,7 @@ import SlideSeckill from '@/components/MainPage/SlideSeckill'
 export default {
   name: 'FreshSeckill',
   components: {
-    'slide-seckill': SlideSeckill,
+    'slide-seckill': SlideSeckill
   },
   data () {
     return {
@@ -45,7 +45,7 @@ export default {
           time: '21:00 - 20:00',
           iconName: 'wait',
           isActive: false,
-          isCurrent: false,
+          isCurrent: false
         },
         {
           index: 1,
@@ -53,9 +53,9 @@ export default {
           time: '20:00 - 21:00',
           iconName: 'proceed',
           isActive: false,
-          isCurrent: false,
-        },
-      ],
+          isCurrent: false
+        }
+      ]
     }
   },
   methods: {
@@ -76,6 +76,7 @@ export default {
     // #3 更新倒计时牌子
     updateCountDownNumber: function (index) {
       // endTime表示当场秒杀结束时间
+      // eslint-disable-next-line no-unused-vars
       var now, hour, min, sec
 
       // 获取当前时间
@@ -101,7 +102,8 @@ export default {
     },
     // 获取当前时刻的时间
     getThisMoment: function () {
-      var moment = new Date(),
+      // eslint-disable-next-line one-var
+      const moment = new Date(),
         h = moment.getHours(),
         m = moment.getMinutes(),
         s = moment.getSeconds()
@@ -113,19 +115,20 @@ export default {
     },
     // 获取当前选中市场与的给定时间点的时间差，并更新data数据
     getCountDown: function (hour) {
-      var tempArr,
+      // eslint-disable-next-line one-var
+      let tempArr,
         now = this.getThisMoment(),
         h = hour - 1 - now[0],
         m = 59 - now[1],
         s = 59 - now[2]
-      // return
+        // return
       if (h > 24) {
         h = h - 24
       }
       tempArr = [h > 9 ? h : '0' + h, m > 9 ? m : '0' + m, s > 9 ? s : '0' + s]
 
       Vue.set(this, 'countDown', tempArr)
-    },
+    }
   },
   // #1 钩子函数：创建timer
   created () {
@@ -135,14 +138,12 @@ export default {
     updateCountDownNumber(getIndex())
     this.timer = setInterval(function () {
       updateCountDownNumber(getIndex())
-      if (true) {
-      }
     }, 1000)
   },
   // 钩子函数：销毁timer
   beforeDestroy () {
     clearInterval(this.timer)
-  },
+  }
 }
 </script>
 

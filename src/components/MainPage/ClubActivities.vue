@@ -5,7 +5,7 @@
 			<span class="line line-right"></span>
 		</h4>
 		<div class="news-list">
-			<p  v-for="news in freshNews"
+			<p  v-for="news in freshNews" :key="news"
 				:class="{enter: news.enter, leave: news.enter === false}"
 				@mouseenter="mouseEnter(news)"
 				@mouseleave="mouseEnter(news)">
@@ -28,33 +28,33 @@ export default {
     	freshNews: [
     		{
     			title: '精心挑选二手闲置',
-    			enter: 0,
+    			enter: 0
     			// leave: false,
     		},
     		{
     			title: '社团活动丰富多样',
-    			enter: 0,
+    			enter: 0
     			// leave: false,
     		},
     		{
     			title: '学号注册安全快捷',
-    			enter: 0,
+    			enter: 0
     			// leave: false,
-    		},
-    	],
+    		}
+    	]
     }
   },
   methods: {
   	mouseEnter: function (news) {
-  		news.enter = !news.enter;
+  		news.enter = !news.enter
   		// news.leave = false;
-  	},
+  	}
   	// mouseLeave: function (news) {
   	// 	news.enter = false;
   	// 	news.leave = true;
   	// },
-  },
-};
+  }
+}
 </script>
 
 <style scoped>
