@@ -38,90 +38,90 @@ import FixedBar from '@/components/Bars/FixedBar'
 import ShortcutBar from '@/components/Bars/ShortcutBar'
 
 export default {
-	name: 'UserCenter',
-	components: {
-		'app-footer': AppFooter,
-		'shortcut-bar': ShortcutBar,
-		'fixed-bar': FixedBar,
-		'user-center-header': UserCenterHeader,
-	},
-	data () {
-		return {
-		isHeaderFixed: false,
-		currentActiveNavIndex: 0,
-		itemNav: [
-			{
-				index: 0,
-				title: '个人中心',
-				name: 'UserCenterHome'
-			},
+  name: 'UserCenter',
+  components: {
+    'app-footer': AppFooter,
+    'shortcut-bar': ShortcutBar,
+    'fixed-bar': FixedBar,
+    'user-center-header': UserCenterHeader
+  },
+  data () {
+    return {
+      isHeaderFixed: false,
+      currentActiveNavIndex: 0,
+      itemNav: [
+        {
+          index: 0,
+          title: '个人中心',
+          name: 'UserCenterHome'
+        },
 
-			{
-				index: 1,
-				title: '我的订单',
-				name: 'MyOrder2'
-			},
-			{
-				index: 2,
-				title: '我的关注',
-				name: 'MyFocus'
-			},
-			{
-				index: 3,
-				title: '我的购物车',
-				name: 'ShoppingCart'
-			},
-			{
-				index: 4,
-				title: '我的钱包',
-				name: 'MyWallet'
-			},
-			{
-				index: 5,
-				title: '我的消息',
-				name: 'MyMessage'
-			},
-			{
-				index: 6,
-				title: '售后服务',
-				name: 'AfterSale'
-			},
-		],
-	}
-	},
-	computed: {
+        {
+          index: 1,
+          title: '我的订单',
+          name: 'MyOrder2'
+        },
+        {
+          index: 2,
+          title: '我的关注',
+          name: 'MyFocus'
+        },
+        {
+          index: 3,
+          title: '我的购物车',
+          name: 'ShoppingCart'
+        },
+        {
+          index: 4,
+          title: '我的钱包',
+          name: 'MyWallet'
+        },
+        {
+          index: 5,
+          title: '我的消息',
+          name: 'MyMessage'
+        },
+        {
+          index: 6,
+          title: '售后服务',
+          name: 'AfterSale'
+        }
+      ]
+    }
+  },
+  computed: {
 
-	},
-	methods: {
-		isActiveBar: function (index) {
-			return index == this.currentActiveNavIndex;
-		},
-		selectItem: function (item) {
-			this.currentActiveNavIndex = item.index;
-			this.$router.push({name: item.name});
-			this.autoFixHeader();
-		},
-		// 固定头部
-		fixHeader: function () {
-			if (window.pageYOffset < 30) {
-				this.isHeaderFixed = false;
-			} else {
-				this.isHeaderFixed = true;
-			}
-		},
-		// 自动检测滚动条，固定header
-		autoFixHeader: function () {
-			var fixHeader = this.fixHeader;
-			window.onscroll = function () {
-				fixHeader();
-			}
-		},
-	},
-	mounted () {
-		this.$router.push({name: 'UserCenterHome'});
-		this.autoFixHeader();
-	},
-};
+  },
+  methods: {
+    isActiveBar: function (index) {
+      return index == this.currentActiveNavIndex
+    },
+    selectItem: function (item) {
+      this.currentActiveNavIndex = item.index
+      this.$router.push({name: item.name})
+      this.autoFixHeader()
+    },
+    // 固定头部
+    fixHeader: function () {
+      if (window.pageYOffset < 30) {
+        this.isHeaderFixed = false
+      } else {
+        this.isHeaderFixed = true
+      }
+    },
+    // 自动检测滚动条，固定header
+    autoFixHeader: function () {
+      var fixHeader = this.fixHeader
+      window.onscroll = function () {
+        fixHeader()
+      }
+    }
+  },
+  mounted () {
+    this.$router.push({name: 'UserCenterHome'})
+    this.autoFixHeader()
+  }
+}
 </script>
 
 <style scoped>
