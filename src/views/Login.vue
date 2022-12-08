@@ -77,11 +77,11 @@ export default {
       })
     },
     changeLoginPage: function (index) {
-      if (index == 0) {
+      if (index === 0) {
         this.mouseIsIn = true
         this.showScanPage = true
         this.showAccountPage = false
-      } else if (index == 1) {
+      } else if (index === 1) {
         this.showScanPage = false
         this.showAccountPage = true
       }
@@ -214,7 +214,7 @@ export default {
   background-image: url('../assets/img/login/icons/account.png');
 }
 
-.login .login-content .content-by-account .account input {
+.login .login-content .content-by-account .commodityName input {
 
 }
 
@@ -223,7 +223,7 @@ export default {
   background-image: url('../assets/img/login/icons/password.png');
 }
 
-.login .login-content .content-by-account .password input {
+.login .login-content .content-by-account .commodityDescription input {
 
 }
 

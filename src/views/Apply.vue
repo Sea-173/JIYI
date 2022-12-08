@@ -197,7 +197,7 @@ export default {
   position: relative;
   left: 110px;
   top: 270px;
-  width: 298px;
+  width: 10px;
 }
 
 .el-upload--picture-card {
