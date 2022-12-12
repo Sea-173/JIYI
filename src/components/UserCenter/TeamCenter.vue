@@ -24,6 +24,28 @@
             </el-table-column>
           </el-table>
         </div>
+        <div class="page-content" v-show="activeIndex==1">
+          <el-table
+            :data="TeamData1"
+            border
+            stripe
+            style="width: 100%;">
+            <el-table-column label="社团id" prop="teamID" sortable width="100px"/>
+            <el-table-column label="社团名" prop="teamName"/>
+            <el-table-column label="社团宣言" prop="introduction"/>
+            <el-table-column label="操作">
+              <template #default="scope">
+                <el-button class="edit" size="small" @click="handleEdit(scope.row)">编辑</el-button>
+                <el-popconfirm title="确定删除吗？" @confirm="handleDelete(scope.row)">
+                  <template #reference>
+                    <el-button size="small" type="danger">
+                      删除</el-button>
+                  </template>
+                </el-popconfirm>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
       </div>
     </user-center-temp>
   </div>
@@ -42,6 +64,7 @@ export default {
     return {
       activeIndex: 0,
       TeamData: [],
+      TeamData1: [],
       id: window.sessionStorage.getItem('id'),
       para: {
         id: window.sessionStorage.getItem('id')
@@ -66,6 +89,7 @@ export default {
   },
   created () {
     this.load()
+    this.load1()
   },
   methods: {
     changeActiveIndex: function (index) {
@@ -77,6 +101,13 @@ export default {
         params: {'id': this.id}
       }).then(res => {
         this.TeamData = res.teams
+      })
+    },
+    load1 () {
+      request.get('/PI/user/team-leader', {
+        params: {'id': this.id}
+      }).then(res => {
+        this.TeamData1 = res.teams
       })
     },
     exit (row) {
