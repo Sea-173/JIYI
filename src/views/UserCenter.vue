@@ -90,6 +90,11 @@ export default {
           index: 7,
           title: '发布商品',
           name: 'ReleaseCommodity'
+        },
+        {
+          index: 8,
+          title: '社团中心',
+          name: 'TeamCenter'
         }
       ]
     }
@@ -169,7 +174,7 @@ export default {
 	}
 	/* 右边导航栏 */
 	#user-center .main-view .side-bar {
-		height: 350px;
+		height: 400px;
 		width: 160px;
 		box-sizing: border-box;
 		position: absolute;
