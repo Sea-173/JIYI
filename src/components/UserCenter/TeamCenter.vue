@@ -39,12 +39,30 @@
                 <el-popconfirm title="确定删除吗？" @confirm="handleDelete(scope.row)">
                   <template #reference>
                     <el-button size="small" type="danger">
-                      删除</el-button>
+                      删除
+                    </el-button>
                   </template>
                 </el-popconfirm>
               </template>
             </el-table-column>
           </el-table>
+          <div style="margin: 10px 0; background-color: #00ACC1">
+            <el-dialog :visible.sync="dialogFormVisible" title="编辑社团" width="25%">
+              <el-form :model="form" :rules="rules" :show-message=true label-width="100px">
+                <el-form-item label="社团名称" prop="need">
+                  <el-input v-model="form.teamName" style="width: 80%"/>
+                </el-form-item>
+                <el-form-item label="社团宣言" prop="need">
+                  <el-input v-model="form.introduction" style="width: 80%"/>
+                </el-form-item>
+                <el-form-item label="社长ID" prop="need">
+                  <el-input v-model="form.teamLeader" style="width: 80%"/>
+                </el-form-item>
+              </el-form>
+              <el-button @click="dialogFormVisible = false">取消</el-button>
+              <el-button type="primary" @click="save">确认</el-button>
+            </el-dialog>
+          </div>
         </div>
       </div>
     </user-center-temp>
@@ -62,12 +80,22 @@ export default {
   },
   data () {
     return {
+      form: {},
+      dialogFormVisible: false,
       activeIndex: 0,
       TeamData: [],
       TeamData1: [],
       id: window.sessionStorage.getItem('id'),
       para: {
         id: window.sessionStorage.getItem('id')
+      },
+      rules: {
+        need: [
+          {
+            required: false,
+            message: '这一项是必须输入的！'
+          }
+        ]
       },
       TeamCenterCategory: [
         {
@@ -92,6 +120,33 @@ export default {
     this.load1()
   },
   methods: {
+    save () {
+      request.post('/PI/user/updateTeam', this.form).then(res => {
+        console.log(res)
+        if (res.code === 400) {
+          this.$message.error('编辑失败')
+        } else {
+          this.$message.success('编辑成功')
+        }
+        // this.load1()
+      })
+      this.dialogFormVisible = false
+    },
+    handleEdit (row) {
+      this.form = row
+      this.dialogFormVisible = true
+    },
+    handleDelete (row) {
+      request.post('/PI/user/deleteTeam', row).then(res => {
+        console.log(res)
+        if (res.code === 400) {
+          this.$message.error('删除失败')
+        } else {
+          this.$message.success('删除成功')
+        }
+        this.load1()
+      })
+    },
     changeActiveIndex: function (index) {
       this.activeIndex = index
       // this.countOrderShowedNum();
@@ -111,17 +166,16 @@ export default {
       })
     },
     exit (row) {
-      row["id"] = this.id
+      row['id'] = this.id
       console.log(row)
       request.post('/PI/user/quitTeam', row).then(res => {
-          if (res.code === 400) {
-            this.$message.error('删除失败')
-          } else {
-            this.$message.success('删除成功')
-          }
-          this.load()
+        if (res.code === 400) {
+          this.$message.error('删除失败')
+        } else {
+          this.$message.success('删除成功')
         }
-      )
+        this.load()
+      })
     }
   }
 }

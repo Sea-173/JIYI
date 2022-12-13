@@ -22,8 +22,7 @@
         </div>
       </div>
       <ul class="right-part">
-        <router-link :to="{name: 'Login'}" tag="li" class="login">[登录]</router-link>
-        <router-link :to="{name: 'Register'}" tag="li" class="register">[注册]</router-link>
+        <li>[{{username}}]</li>
         <li class="user-center" @mouseenter="userCenterDown" @mouseleave="userCenterDown">
           <router-link :to="{name: 'UserCenter'}" tag="span">用户中心</router-link>
           <ul v-show="isUserCenterDown">
@@ -65,6 +64,7 @@ export default {
         ],
       },
       form: {},
+      username: window.sessionStorage.getItem("name"),
       dialogFormVisible_new: false,
       isShowAddressSelectedBar: false,
       isUserCenterDown: false,
@@ -111,6 +111,14 @@ export default {
           name: '我的消息',
           url: '#',
           number: 4,
+        },
+        {
+          name: '发布商品',
+          url: '#',
+        },
+        {
+          name: '社团中心',
+          url: '#',
         }
       ],
       // 社团合作
