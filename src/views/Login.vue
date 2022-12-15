@@ -13,7 +13,7 @@
           <div class="content-by-account">
             <form>
               <label class="box account">
-                <input type="text" name="" placeholder="邮箱/用户名" v-model="form.username">
+                <input type="text" name="" placeholder="手机号" v-model="form.username">
               </label>
               <label class="box password">
                 <input type="password" name="" placeholder="密码" v-model="form.password">

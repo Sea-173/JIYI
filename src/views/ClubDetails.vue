@@ -71,6 +71,7 @@
           </ul>
         </div>
       </div>
+      <el-button type="primary" round>加入社团</el-button>
     </div>
     <app-footer></app-footer>
   </div>
