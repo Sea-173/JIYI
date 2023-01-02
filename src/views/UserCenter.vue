@@ -95,6 +95,11 @@ export default {
           index: 8,
           title: '社团中心',
           name: 'TeamCenter'
+        },
+        {
+          index: 9,
+          title: '活动中心',
+          name: 'ActivityCenter'
         }
       ]
     }
@@ -174,7 +179,7 @@ export default {
 	}
 	/* 右边导航栏 */
 	#user-center .main-view .side-bar {
-		height: 400px;
+		height: 450px;
 		width: 160px;
 		box-sizing: border-box;
 		position: absolute;

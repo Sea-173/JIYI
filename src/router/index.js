@@ -11,6 +11,7 @@ import UserCenter from '@/views/UserCenter'
 import UserCenterHome from '@/views/UserCenterHome'
 import ReleaseCommodity from '../components/UserCenter/ReleaseCommodity'
 import TeamCenter from '../components/UserCenter/TeamCenter'
+import ActivityCenter from '../components/UserCenter/ActivityCenter'
 
 import ShoppingCart from '@/components/UserCenter/ShoppingCart'
 import MyOrder2 from '@/components/UserCenter/MyOrder2'
@@ -69,6 +70,11 @@ export default new Router({
         return '/user-center/user-center-home'
       },
       children: [
+        {
+          path: 'activity-center',
+          name: 'ActivityCenter',
+          component: ActivityCenter
+        },
         {
           path: 'user-center-home',
           name: 'UserCenterHome',
