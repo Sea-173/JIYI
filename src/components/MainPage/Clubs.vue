@@ -20,6 +20,11 @@
         <slide-seckill/>
       </div>
     </div>
+    <div class="fresh-footer">
+      <router-link :to="{ path: '/all-clubs', query: {teamID: 2} }">
+        <span>更多社团 &gt;</span>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -121,7 +126,7 @@ export default {
         h = hour - 1 - now[0],
         m = 59 - now[1],
         s = 59 - now[2]
-        // return
+      // return
       if (h > 24) {
         h = h - 24
       }
@@ -159,6 +164,29 @@ export default {
   margin: 0 auto;
   padding-top: 40px;
   /*background-color: #e55;*/
+}
+
+.fresh-footer {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  position: relative;
+  top: -40px;
+}
+
+.fresh-footer span {
+  padding: 5px 15px;
+  border: 1px solid #12ab34;
+  border-radius: 15px;
+  color: #12ab34;
+  font-size: 14px;
+}
+
+.fresh-footer span:hover {
+  background-color: #12ab34;
+  color: #fff;
+  cursor: pointer;
 }
 
 /* 生鲜秒杀顶部 */

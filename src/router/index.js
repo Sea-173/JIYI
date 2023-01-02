@@ -19,6 +19,7 @@ import MyWallet from '@/components/UserCenter/MyWallet'
 import MyMessage from '@/components/Message/MyMessage'
 import AfterSale from '@/components/UserCenter/AfterSale'
 import MessageBox from '@/components/Message/MessageBox'
+import AllClubs from '../components/MainPage/AllClubs'
 
 Vue.use(Router)
 
@@ -30,7 +31,11 @@ export default new Router({
       name: 'MessageBox',
       component: MessageBox
     },
-
+    {
+      path: '/all-clubs',
+      name: 'AllClubs',
+      component: AllClubs
+    },
     {
       path: '/home',
       name: 'Home',
