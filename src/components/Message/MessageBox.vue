@@ -10,9 +10,21 @@
           <img src="../../assets/img/user-head/5.jpg" /></div>
           <div class="bubble bubble-left">今晚7点人工草坪有羽毛球比赛</div>
         </div>
-        <div class="message-item item-right"><div class="bubble bubble-right">收到</div><div class="avatar"><img src="../../assets/img/user-head/4.jpg" /></div></div>
+        <div class="message-item item-right">
+          <div class="bubble bubble-right">收到</div>
+            <div class="avatar">
+              <img :src="this.user.avatar">
+<!--              <img src="../../assets/img/user-head/4.jpg" />-->
+            </div>
+        </div>
         <div class="message-item item-center"><span>今天 13:15</span></div>
-        <div class="message-item item-right"><div class="bubble bubble-right">抱歉晚上临时有事，去不了了</div><div class="avatar"><img src="../../assets/img/user-head/4.jpg" /></div></div>
+        <div class="message-item item-right">
+          <div class="bubble bubble-right">抱歉晚上临时有事，去不了了</div>
+          <div class="avatar">
+            <img :src="this.user.avatar">
+<!--            <img src="../../assets/img/user-head/4.jpg" />-->
+          </div>
+        </div>
       </div>
       <div class="input-area">
         <textarea name="text" id="textarea"></textarea>
@@ -30,6 +42,7 @@
 import MessageList from './MessageList'
 import FixedBar from "../Bars/FixedBar";
 import AppFooter from '../MainPage/AppFooter'
+import request from '../../utils/requests'
 
 export default {
   name: 'MessageBox',
@@ -39,7 +52,41 @@ export default {
   comments:{
     'messsage-list': MessageList
   },
+  data () {
+    return{
+      user: {
+        name: '张三',
+        account: '2252666@tonngji.edu.cn',
+        phone: '12345',
+        avatar: 'https://www.runoob.com/wp-content/uploads/2014/03/postgresql-11-1175122.png'
+        // avatarLink: ,
+      }
+    }
+  },
+  mounted () {
+    this.getUserHead();
+  },
   methods:{
+
+    getUserHead(){
+      let mydata = {id: window.sessionStorage['id']}
+      request.get('/PI/user', {params: mydata}).then(res => {
+        if (res.code === '400') {
+          this.$message.error('查无此人')
+        } else {
+          console.log(res)
+          this.user.name = res.User.name
+          this.user.phone = res.User.phone
+          this.user.avatar = (res.User.avatar)
+          // console.log('头像已经修改为' + this.user.avatar)
+
+          // this.$message.success('登陆成功')
+          // window.sessionStorage['name'] = res.name
+          // window.sessionStorage['id'] = res.id
+          // this.$router.push('/home')
+        }
+      })
+    },
 
     send : function (){
       let text = document.querySelector('#textarea').value
@@ -50,7 +97,9 @@ export default {
 
       let item = document.createElement('div')
       item.className = 'message-item item-right'
-      item.innerHTML += `<div class="bubble bubble-left">${text}</div><div class="avatar"><img src="https://s1.328888.xyz/2022/06/08/zZwOJ.jpg" alt="zZwOJ.jpg" border="0" /></div>`
+      //item.innerHTML += `<div class="bubble bubble-left">${text}</div><div class="avatar"><img src="https://s1.328888.xyz/2022/06/08/zZwOJ.jpg" alt="zZwOJ.jpg" border="0" /></div>`
+      // eslint-disable-next-line no-template-curly-in-string
+      item.innerHTML += `<div class="bubble bubble-left">${text}</div><div class="avatar"><img src="${this.user.avatar}"/></div>`
 
       document.querySelector('.message-content').appendChild(item)
       document.querySelector('#textarea').value = ''
