@@ -3,10 +3,12 @@
 		<div class="profile">
 			<div class="user">
 				<div class="user-avatar">
-					<img src="../assets/img/user-head/1.jpg">
+<!--					<img src="../assets/img/user-head/1.jpg">-->
+          <img :src="this.user.avatar">
 				</div>
 				<p class="user-name">用户名：{{ user.name }}</p>
 				<p class="user-account">账 号：{{ user.account }}</p>
+        <p class="user-account">手 机：{{ user.phone }}</p>
 			</div>
 			<div class="wallet">
 				<div class="common-title">我的钱包</div>
@@ -42,13 +44,17 @@
 </template>
 
 <script>
+import request from '../utils/requests'
+
 export default {
   name: 'UserCenterHome',
   data () {
     return {
     	user: {
     		name: '张三',
-    		account: '2252666@tonngji.edu.cn'
+    		account: '2252666@tonngji.edu.cn',
+        phone: '12345',
+        avatar: 'https://www.runoob.com/wp-content/uploads/2014/03/postgresql-11-1175122.png'
     		// avatarLink: ,
     	},
     	wallet: [
@@ -127,8 +133,37 @@ export default {
     	]
     }
   },
+  mounted () {
+    this.onLoad()
+  },
   methods: {
   	//
+    onLoad () {
+      this.getUser()
+    },
+    // 获取用户名与电话
+    getUser () {
+      console.log(window.sessionStorage['id'])
+      let mydata = {id: window.sessionStorage['id']}
+      request.get('/PI/user', {params: mydata}).then(res => {
+        if (res.code === '400') {
+          this.$message.error('查无此人')
+        } else {
+          console.log(res)
+          this.user.name = res.User.name
+          this.user.account = res.User.email
+          this.user.phone = res.User.phone
+          this.user.avatar = (res.User.avatar)
+          // console.log('头像已经修改为' + this.user.avatar)
+
+          // this.$message.success('登陆成功')
+          // window.sessionStorage['name'] = res.name
+          // window.sessionStorage['id'] = res.id
+          // this.$router.push('/home')
+        }
+      })
+    },
+
   	// 获取order icon的位置参数
   	getOrderIconPosition: function (value) {
   		if (value.index === this.hoverOrderIndex) {

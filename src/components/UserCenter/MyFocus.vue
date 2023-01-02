@@ -40,6 +40,7 @@
 import UserCenterTemp from '@/components/UserCenter/UserCenterTemp'
 import FocusProductListBase from '@/components/UserCenter/FocusProductListBase'
 import MyClub from '@/components/UserCenter/Myclub'
+import request from '../../utils/requests'
 
 export default {
   name: 'MyFocus',
@@ -262,6 +263,53 @@ export default {
   },
   mounted () {
     this.countItemsShowNum()
+
+
+    let mydata = {id: window.sessionStorage['id']}
+    request.get('/PI/user/activity', {params: mydata}).then(res => {
+      console.log(res)
+      if (res.code === '200') {
+        console.log(res.teams)//返回的api忘记把teams改成activities了
+
+        let the_activities=[]
+        let activity={
+          index: 0,
+          imageName: '1.png',
+          name: '吉他社',
+          originalPrice: 20.90,
+          currentPrice: 20.90,
+          commentNum: 29014,
+          favorableRate: 98,
+          clubActivity: '吉他大赛',
+          activityDate: '2022/06/19',
+          activityLocation: '安楼 101',
+          isApplyed: '√ 已报名'
+        }
+
+
+        for (var i = 0; i < res.teams.length; i++) {
+          console.log(res.teams[i].theme)
+          //teamID,address,theme,activityTime,activityID,activityDescription
+
+          activity.activityDate=res.teams[i].activityTime
+          activity.name='6'
+          activity.activityLocation=res.teams[i].address
+          activity.index=res.teams[i].activityID
+          activity.clubActivity=res.teams[i].theme+' '+res.teams[i].activityDescription
+
+          the_activities.push(activity)
+        }
+
+        // eslint-disable-next-line camelcase
+        this.clubList = the_activities
+
+      }
+
+
+    })
+
+
+
   }
 }
 </script>

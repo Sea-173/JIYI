@@ -119,6 +119,10 @@ export default {
         {
           name: '社团中心',
           url: '#',
+        },
+        {
+          name: '活动中心',
+          url: '#'
         }
       ],
       // 社团合作
