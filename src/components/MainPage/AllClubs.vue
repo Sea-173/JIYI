@@ -23,7 +23,7 @@
         <div class="main-area">
           <!-- 产品图片 -->
           <div class="img-area">
-            <img :src="this.picture">
+            <img :src="getpath(picture)">
           </div>
           <div class="product-info">
             <div class="title">
@@ -130,7 +130,7 @@ export default {
   },
   methods: {
     getpath (path) {
-      return path ? require('../../../../../../../upload/' + path) : ''// path不为null就返回对应的路径
+      if (path.startsWith('http')) { return path } else { return path ? require('../../../../../../upload/' + path) : '' }// path不为null就返回对应的路径
     },
     handleJoin (row) {
       this.all = {
@@ -148,7 +148,7 @@ export default {
     joinTeam () {
       this.all = {
         'id': window.sessionStorage.getItem('id'),
-        'activityID': this.teamID
+        'teamID': this.teamID
       }
       request.post('/PI/user/joinTeam', this.all).then(res => {
         if (res.code === 200) {

@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="fresh-footer">
-      <router-link :to="{ path: '/all-clubs', query: {teamID: 2} }">
+      <router-link :to="{ path: '/all-clubs', query: {teamID: 1} }">
         <span>更多社团 &gt;</span>
       </router-link>
     </div>

@@ -28,7 +28,8 @@
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
                 :limit="1"
-                :on-exceed="onExceed">
+                :on-exceed="onExceed"
+                list-type="picture">
                 <el-button size="small" type="primary">点击上传</el-button>
               </el-upload>
             </label>
@@ -128,7 +129,7 @@ export default {
   margin-top: 0px;
   margin-bottom: 50px;
   width: 600px;
-  height: 500px;
+  height: 600px;
   box-shadow: 0 2px 10px #aaa;
   position: relative;
 }
@@ -197,7 +198,7 @@ export default {
   position: relative;
   left: 110px;
   top: 270px;
-  width: 10px;
+  width: 50px;
 }
 
 .el-upload--picture-card {
@@ -205,7 +206,7 @@ export default {
 }
 
 .apply .page-content .submit {
-  top: 400px;
+  top: 500px;
   background-color: #fff;
 }
 
