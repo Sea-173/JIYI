@@ -78,7 +78,7 @@
                     <el-table-column label="卖家" prop="sellerName"/>
                     <el-table-column label="操作" width="120px">
                       <template #default="scope">
-                        <el-button class="edit" size="small" @click="handleEdit(scope.row)">加入购物车</el-button>
+                        <el-button class="edit" size="small" @click="addToShoppingCart(scope.row)">加入购物车</el-button>
                       </template>
                     </el-table-column>
                   </el-table>
@@ -142,6 +142,19 @@ export default {
           this.$message.success('加入成功')
         } else {
           this.$message.error('加入失败')
+        }
+      })
+    },
+    addToShoppingCart (row) {
+      this.all = {
+        'userID': window.sessionStorage.getItem('id'),
+        'commodityNumber': row.commodityNumber
+      }
+      request.post('/CT/addToShoppingCart', this.all).then(res => {
+        if (res.code === 200) {
+          this.$message.success('添加成功')
+        } else {
+          this.$message.error('添加失败')
         }
       })
     },
