@@ -35,8 +35,9 @@
 							v-if="activeIndex ? getProduct(product.id).price1 < getProduct(product.id).price0 : 1">
 							<input type="checkbox" name="" value="" v-model="product.isSelected">
 							<span class="product-area">
-								<img :src="getProductImg(getProduct(product.id).imgName)" class="product-img">
-								<span class="product-name">{{ getProduct(product.id).desc }}</span>
+                <img :src="getProduct(product.id).imgName" class="product-img">
+<!--								<img :src="getProductImg(getProduct(product.id).imgName)" class="product-img">-->
+								<span class="product-name">{{getProduct(product.id).name}} {{ getProduct(product.id).desc }}</span>
 							</span>
 							<span class="product-price info"
 								:style="{'line-height': calReducedMoney(product)>0 ? '20px' : '40px'}">
@@ -59,8 +60,8 @@
 								￥{{ (getProduct(product.id).price1*product.num).toFixed(2) }}
 							</span>
 							<span class="operation info">
-								<span class="delete">删除</span></br>
-								<span class="add-to-focus">移到我的关注</span>
+								<span class="delete" @click="deleteProduct(getProduct(product.id))">删除</span>
+<!--								<span class="add-to-focus">移到我的关注</span>-->
 							</span>
 						</li>
 					</ul>
@@ -92,12 +93,13 @@
 import UserCenterTemp from '@/components/UserCenter/UserCenterTemp'
 import SummaryBar from '@/components/Bars/SummaryBar'
 import inputProducts from '../../assets/database/products.js'
+import request from '../../utils/requests'
 
 export default {
   name: 'ShoppingCart',
   components: {
   	'user-center-temp': UserCenterTemp,
-  	'summary-bar': SummaryBar,
+  	'summary-bar': SummaryBar
   },
   data () {
     return {
@@ -107,13 +109,13 @@ export default {
     		{
     			index: 0,
     			item: '全部商品',
-    			showNum: 0,
+    			showNum: 0
     		},
     		{
     			index: 1,
     			item: '降价商品',
-    			showNum: 0,
-    		},
+    			showNum: 0
+    		}
     	],
     	// shops数组表示卖家列表，数组中每个对象表示一个卖家
     	shops: [
@@ -126,14 +128,14 @@ export default {
     				{
 		    			id: 2,
 		    			num: 1,
-		    			isSelected: true,
+		    			isSelected: true
 		    		},
 		    		{
 		    			id: 5,
 		    			num: 2,
-		    			isSelected: true,
-		    		},
-    			],
+		    			isSelected: true
+		    		}
+    			]
     		},
     		{
     			index: 2,
@@ -143,14 +145,14 @@ export default {
     				{
 		    			id: 12,
 		    			num: 1,
-		    			isSelected: false,
+		    			isSelected: false
 		    		},
 		    		{
 		    			id: 15,
 		    			num: 2,
-		    			isSelected: false,
-		    		},
-    			],
+		    			isSelected: false
+		    		}
+    			]
     		},
     		{
     			index: 3,
@@ -158,7 +160,7 @@ export default {
     			title: '个人卖家',
     			// isSelectedAll: false,
     			products: [
-    			],
+    			]
     		},
     		{
     			index: 4,
@@ -169,14 +171,14 @@ export default {
     				{
 		    			id: 32,
 		    			num: 1,
-		    			isSelected: false,
+		    			isSelected: false
 		    		},
 		    		{
 		    			id: 34,
 		    			num: 2,
-		    			isSelected: false,
-		    		},
-    			],
+		    			isSelected: false
+		    		}
+    			]
     		},
     		{
     			index: 5,
@@ -184,88 +186,202 @@ export default {
     			title: '个人卖家',
     			// isSelectedAll: false,
     			products: [
-    			],
-    		},
+    			]
+    		}
     	],
     	// 所有商品
-    	allProducts: inputProducts,
+    	allProducts: inputProducts
     }
   },
   computed: {
   	// 计算勾选的商品总金额
   	totalMoney: function () {
-  		var count = 0;
+  		var count = 0
   		for (var i = 0; i < this.shops.length; i++) {
-  			var products = this.shops[i].products;
+  			var products = this.shops[i].products
   			for (var j = 0; j < products.length; j++) {
   				if (products[j].isSelected) {
-	  				count += this.getProduct(products[j].id).price1 * products[j].num;
+	  				count += this.getProduct(products[j].id).price1 * products[j].num
 	  			}
   			}
   		}
-  		return count.toFixed(2);
+  		return count.toFixed(2)
   	},
   	// 计算购物车总商品数
   	selectedProductsNum: function () {
-  		var count = 0;
+  		var count = 0
   		for (var i = 0; i < this.shops.length; i++) {
-  			var products = this.shops[i].products;
+  			var products = this.shops[i].products
   			for (var j = 0; j < products.length; j++) {
   				if (products[j].isSelected) {
-	  				count += products[j].num;
+	  				count += products[j].num
   				}
   			}
   		}
-  		return count;
+  		return count
   	},
   	// 购物车中的商品是否全选
     isSelectedAll: {
     	get () {
     		for (var i = 0; i < this.shops.length; i++) {
 	    		if (!this.isShopSelectedAll[i]) {
-	    			return false;
+	    			return false
 	    		}
 	  		}
-	  		return true;
+	  		return true
     	},
     	// 这里要加一个空的setter，因为用v-model绑定时会报错
-    	set () {},
+    	set () {}
     },
   	// 卖家中的商品是否全选
   	isShopSelectedAll: function () {
-  		var tempArr = [];
+  		var tempArr = []
   		for (var i = 0; i < this.shops.length; i++) {
-  			tempArr[i] = true;
-  			var products = this.shops[i].products;
+  			tempArr[i] = true
+  			var products = this.shops[i].products
   			for (var j = 0; j < products.length; j++) {
   				if (!products[j].isSelected) {
-	  				tempArr[i] = false;
-	  				break;
+	  				tempArr[i] = false
+	  				break
   				}
   			}
   		}
-  		return tempArr;
-  	},
+  		return tempArr
+  	}
 
   },
   methods: {
+    getMyShoppingCart: function () {
+      let mydata = {id: window.sessionStorage['id']}
+      console.log('id=' + mydata.id)
+      let shopper = []
+      let producets = []
+
+      request.get('/PI/user/shoppingCart?id=' + window.sessionStorage['id']).then(res => {
+        console.log(res)
+        // console.log(res.commodities)
+        if (res.code === '200') {
+          console.log('获取成功')
+          for (var i = 0; i < res.commodities.length; i++) {
+            console.log(res.commodities[i].commodityName)
+            let commodity = {
+              'id': 1,
+              'name': '高数',
+              'desc': '高等数学习题册',
+              'price0': 39.90,
+              'price1': 39.90,
+              'specification': '1本',
+              'producingArea': '云南',
+              'imgName': '1.jpg',
+              'category': '书籍课本',
+              'brand': '书籍课本',
+              'saleNum': 3,
+              'commentNum': 188
+            }
+            commodity.imgName = res.commodities[i].picture
+            commodity.id = res.commodities[i].commodityNumber
+            commodity.name = res.commodities[i].commodityName
+            commodity.price0 = res.commodities[i].commodityPrice
+            commodity.price1 = res.commodities[i].commodityPrice
+            commodity.desc = res.commodities[i].commodityDescription
+            commodity.brand = res.commodities[i].sellerName
+
+            // producets.push(commodity)
+            producets[commodity.id - 1] = commodity
+
+            let split_produce = {
+              id: 1,
+              num: 1,
+              isSelected: false
+            }
+            split_produce.id = res.commodities[i].commodityNumber
+
+            let shop_split = {
+              index: 1,
+              brand: 'Ambitiousness',
+              title: '个人卖家',
+              // 购物车中每个卖家的商品列表
+              products: []
+            }
+            shop_split.brand = res.commodities[i].sellerName
+
+            var isContinue = 0
+            for (var k = 0; k < shopper.length; k++) {
+              if (shopper[k].brand === shop_split.brand) {
+                shopper[k].products.push(split_produce)
+                isContinue = 1
+                break
+              }
+            }
+            if (isContinue === 1) {
+              continue
+            }
+
+            shop_split.index = shopper.length + 1
+            shop_split.products.push(split_produce)
+            shopper.push(shop_split)
+          }
+          console.log(producets)
+          console.log(shopper)
+          this.allProducts = producets
+          this.shops = shopper
+        }
+      })
+    },
   	changeActiveIndex: function (index) {
-  		this.activeIndex = index;
+  		this.activeIndex = index
   	},
   	// 获取商品图片
   	getProductImg: function (name) {
-  		return require('../../assets/img/product-images/' + name);
+  		return require('../../assets/img/product-images/' + name)
   	},
   	// 加减商品数量
   	addProductNum: function (product, bool) {
   		if (bool) {
-  			product.num ++;
+  			product.num++
   		} else if (product.num > 1) {
-  			product.num --;
+  			product.num--
   		}
   	},
   	// 删除商品
-  	deleteProduct: function () {},
+  	deleteProduct: function (product) {
+      let mydata = {
+        userID: window.sessionStorage['id'],
+        commodityNumber: product.id
+      }
+      mydata['userID'] = window.sessionStorage['id']
+      mydata['commodityNumber'] = product.id
+      console.log(mydata['userID'] + ' ' + mydata['commodityNumber'])
+      request.post(
+        '/CT/deleteFromShoppingCart?userID=' + mydata['userID'] +
+        '&commodityNumber=' + product.id, mydata).then(res => {
+        console.log(res)
+        // request.post('/CT/deleteFromShoppingCart', mydata).then(res => {
+        if (res.code === 400) {
+
+        } else if (res.code === 200) {
+          console.log('success')
+
+          for (var i = 0; i < this.shops.length; i++) {
+            console.log(this.shops[i].brand + ' ' + product.brand)
+            if (this.shops[i].brand === product.brand) {
+              console.log('找到了i:' + i)
+              console.log(this.shops[i].products.length)
+              if (this.shops[i].products.length === 1) {
+                this.shops.splice(i, 1)
+                break
+              }
+              for (var k = 0; k < this.shops[i].products.length; k++) {
+                if (this.shops[i].products[k].id === product.id) {
+                  this.shops[i].products.splice(k, 1)
+                  console.log('删除k:' + product.id)
+                }
+              }
+            }
+          }
+        }
+      })
+    },
 
   	// 全选购物车或者单个店家
   	selectAll: function (all) {
@@ -273,29 +389,29 @@ export default {
   		// all传入shops数组表示购物车中商品全选
   		// all传入一个对象表示某个卖家中商品全选
   		if (all instanceof Array) {
-  			var bool = !this.isSelectedAll;
+  			var bool = !this.isSelectedAll
   			// var bool = false;
   			for (var i = 0; i < all.length; i++) {
-	  			var products = all[i].products;
+	  			var products = all[i].products
 	  			for (var j = 0; j < products.length; j++) {
-	  				products[j].isSelected = bool;
+	  				products[j].isSelected = bool
 	  			}
 	  		}
   		} else {
-  			var index = this.shops.indexOf(all);
-  			var bool = !this.isShopSelectedAll[index];
+  			var index = this.shops.indexOf(all)
+  			var bool = !this.isShopSelectedAll[index]
   			for (var i = 0; i < all.products.length; i++) {
-  				all.products[i].isSelected = bool;
+  				all.products[i].isSelected = bool
   			}
   		}
   	},
   	// 计算降价金额
   	calReducedMoney: function (product) {
-  		return (this.getProduct(product.id).price0 - this.getProduct(product.id).price1).toFixed(2);
+  		return (this.getProduct(product.id).price0 - this.getProduct(product.id).price1).toFixed(2)
   	},
   	// 根据商品id获取详细信息
   	getProduct: function (id) {
-  		return this.allProducts[id - 1];
+  		return this.allProducts[id - 1]
   	},
   	// 计算滚动条移动条下方与屏幕地面的距离；
   	calScrollBottom: function () {
@@ -303,30 +419,31 @@ export default {
 	  		// 滚动条与顶部的距离，可理解为滚动条移动条部分的顶部与屏幕顶部之间的距离；
 	  		clientHeight = document.documentElement.clientHeight,
 	  		// 屏幕可视高度，可理解为滚动条移动条部分的长度；
-	  		scrollHeight = document.documentElement.scrollHeight;
+	  		scrollHeight = document.documentElement.scrollHeight
 	  		// 滚动条可滚动的总高度，可理解为整条滚动条的长度；
-	  	this.scrollBottom = scrollHeight - clientHeight - scrollTop;
+	  	this.scrollBottom = scrollHeight - clientHeight - scrollTop
   	},
   	// 自动检测滚动条下拉距离，隐藏金额汇总栏
   	autoHideSummaryBar: function () {
-  		var calScrollBottom = this.calScrollBottom;
-  		var fixHeaderAgain = this.fixHeaderAgain;
+  		var calScrollBottom = this.calScrollBottom
+  		var fixHeaderAgain = this.fixHeaderAgain
 	  	window.onscroll = function () {
-	  		fixHeaderAgain();
-	  		calScrollBottom();
-	  	};
+	  		fixHeaderAgain()
+	  		calScrollBottom()
+	  	}
   	},
   	// 解决与固定表头的事件冲突
   	fixHeaderAgain: function () {
-  		this.$emit('fix-header');
-  	},
+  		this.$emit('fix-header')
+  	}
   },
   created () {},
   mounted () {
-  	this.calScrollBottom();
-  	this.autoHideSummaryBar();
+    this.getMyShoppingCart()
+  	this.calScrollBottom()
+  	this.autoHideSummaryBar()
   }
-};
+}
 </script>
 
 <style scoped>
@@ -563,4 +680,3 @@ export default {
 		z-index: 10;
 	}
 </style>
-
