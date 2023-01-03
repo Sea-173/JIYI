@@ -43,7 +43,7 @@
                     </el-button>
                   </template>
                 </el-popconfirm>
-                <el-button class="edit" size="small" type='primary' @click="handleEdit(scope.row)">发布活动</el-button>
+                <el-button class="edit" size="small" type='primary' @click="handleActivity(scope.row)">发布活动</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -60,8 +60,28 @@
                   <el-input v-model="form.teamLeader" style="width: 80%"/>
                 </el-form-item>
               </el-form>
-              <el-button @click="dialogFormVisible = false">取消</el-button>
+              <el-button @click="dialogFormVisible = false" class="cancel">取消</el-button>
               <el-button type="primary" @click="save">确认</el-button>
+            </el-dialog>
+          </div>
+          <div style="margin: 10px 0; background-color: #00ACC1">
+            <el-dialog :visible.sync="dialogFormVisible1" title="发布活动" width="25%">
+              <el-form :model="form" :rules="rules" :show-message=true label-width="100px">
+                <el-form-item label="活动时间" prop="need">
+                  <el-input v-model="form1.activityTime" style="width: 80%"/>
+                </el-form-item>
+                <el-form-item label="活动地点" prop="need">
+                  <el-input v-model="form1.address" style="width: 80%"/>
+                </el-form-item>
+                <el-form-item label="活动主题" prop="need">
+                  <el-input v-model="form1.theme" style="width: 80%"/>
+                </el-form-item>
+                <el-form-item label="活动描述" prop="need">
+                  <el-input v-model="form1.activityDescription" style="width: 80%"/>
+                </el-form-item>
+              </el-form>
+              <el-button @click="dialogFormVisible1 = false" class="cancel">取消</el-button>
+              <el-button type="primary" @click="publish">确认</el-button>
             </el-dialog>
           </div>
         </div>
@@ -82,7 +102,9 @@ export default {
   data () {
     return {
       form: {},
+      form1: {},
       dialogFormVisible: false,
+      dialogFormVisible1: false,
       activeIndex: 0,
       TeamData: [],
       TeamData1: [],
@@ -133,9 +155,25 @@ export default {
       })
       this.dialogFormVisible = false
     },
+    publish () {
+      request.post('/TE/publishActivity', this.form1).then(res => {
+        console.log(res)
+        if (res.code === 400) {
+          this.$message.error('发布失败')
+        } else {
+          this.$message.success('发布成功')
+        }
+        // this.load1()
+      })
+      this.dialogFormVisible1 = false
+    },
     handleEdit (row) {
       this.form = row
       this.dialogFormVisible = true
+    },
+    handleActivity (row) {
+      this.dialogFormVisible1 = true
+      this.form1.teamID = row.teamID
     },
     handleDelete (row) {
       request.post('/PI/user/deleteTeam', row).then(res => {
@@ -183,5 +221,7 @@ export default {
 </script>
 
 <style scoped>
-
+.cancel {
+  margin-left: 60px;
+}
 </style>
