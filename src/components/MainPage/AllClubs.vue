@@ -130,7 +130,7 @@ export default {
   },
   methods: {
     getpath (path) {
-      if (path.startsWith('http')) { return path } else { return path ? require('../../../../../../upload/' + path) : '' }// path不为null就返回对应的路径
+      if (path.startsWith('http')) { return path } else { return path ? require('../../assets/upload/' + path) : '' }// path不为null就返回对应的路径
     },
     handleJoin (row) {
       this.all = {

@@ -43,6 +43,7 @@
                     </el-button>
                   </template>
                 </el-popconfirm>
+                <el-button class="edit" size="small" type='primary' @click="handleEdit(scope.row)">发布活动</el-button>
               </template>
             </el-table-column>
           </el-table>
