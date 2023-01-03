@@ -5,6 +5,7 @@
         :item-category="ReleaseCommodityCategory"
         :title="'发布商品'"
         @change-active-index="changeActiveIndex">
+        <div v-show="activeIndex==0">
         <div class="releaselist">
         <div class="page-content">
         <form>
@@ -17,14 +18,9 @@
             <label class="box commodityDescription">
                 <input type="text" name="" placeholder="商品描述" v-model="form.commodityDescription">
             </label>
-            <label class="box teamChoice">
-<!--              选择想要发布的团队-->
-              <select name="选择发布的社团">
-                <option value="0">社团1</option>
-                <option value="2">社团1</option>
-              </select>
-<!--                <textarea type="password" name="" rows=3 cols=41 placeholder="申请理由"></textarea>-->
-            </label>
+          <label class="box releaseTeam">
+            <input type="text" name="" placeholder="发布社团名称" v-model="form.releaseTeam">
+          </label>
             <label class="release-upload">
                 <el-upload
                     class="release-upload-demo"
@@ -42,6 +38,24 @@
             </label>
         </form>
         </div>
+        </div>
+        </div>
+        <div v-show="activeIndex==1">
+          <el-table
+            :data="TeamData"
+            border
+            stripe
+            style="width: 100%;">
+            <el-table-column label="商品id" prop="teamID" sortable width="100px"/>
+            <el-table-column label="商品名称" prop="teamName"/>
+            <el-table-column label="商品价格" prop="teamLeader"/>
+            <el-table-column label="商品描述" prop="teamLeaderName"/>
+            <el-table-column label="操作">
+              <template #default="scope">
+                <el-button size="small" @click="exit(scope.row)">删除商品</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
         </div>
       </user-center-temp>
     </div>
@@ -89,7 +103,8 @@ export default {
       // this.countOrderShowedNum();
     },
     save () {
-      request.post('/MT/insertCommodity', this.form).then(res => {
+      console.log(this.form)
+      request.post('/CT/insertCommodity', this.form).then(res => {
         console.log(res)
         if (res.code === 200) {
           this.$message.success('创建成功')
@@ -177,11 +192,17 @@ export default {
   top: 300px;
 }
 
-.release-commodity .page-content .teamChoice {
+.release-commodity .page-content .releaseTeam {
   position: relative;
-  top: 10px;
-  left: 500px;
+  top: 18px;
+  left: 480px;
 }
+
+/*.release-commodity .page-content .teamChoice {*/
+/*  position: relative;*/
+/*  top: 10px;*/
+/*  left: 500px;*/
+/*}*/
 
 .release-upload{
   position: relative;
