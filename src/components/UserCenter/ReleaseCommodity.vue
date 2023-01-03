@@ -54,7 +54,7 @@
             <el-table-column label="所属团队id" prop="teamID"/>
             <el-table-column label="操作">
               <template #default="scope">
-                <el-button size="small" @click="exit(scope.row)">删除商品</el-button>
+                <el-button size="small" @click="deleteCommmodity(scope.row)">删除商品</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -108,6 +108,15 @@ export default {
     this.getUserCommodity()
   },
   methods: {
+    deleteCommmodity (row) {
+      var commodityNumber = row.commodityNumber
+      request.get('/CT/deleteCommodity', {
+        params: {'commodityNumber': commodityNumber}
+      }).then(res => {
+        console.log(res)
+        this.getUserCommodity()
+      })
+    },
     getUserCommodity () {
       console.log(this.id)
       request.get('/CT/getUserCommodities', {
@@ -126,6 +135,7 @@ export default {
       request.post('/CT/insertCommodity', this.form).then(res => {
         if (res.code === 200) {
           this.$message.success('发布成功')
+          this.getUserCommodity()
           // this.$router.push('/home')
         } else {
           this.$message.error('发布失败')

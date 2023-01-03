@@ -6,27 +6,27 @@
       :title="'我的关注'"
       @change-active-index="changeActiveIndex">
       <!-- 我的收藏 列表 -->
-      <div v-show="activeIndex == 0">
-        <product-list
-          @show-all-product=""
-          :item="'我的收藏夹'"
-          :all-product-list="favoriteList">
-        </product-list>
-      </div>
+<!--      <div v-show="activeIndex == 0">-->
+<!--        <product-list-->
+<!--          @show-all-product=""-->
+<!--          :item="'我的收藏夹'"-->
+<!--          :all-product-list="favoriteList">-->
+<!--        </product-list>-->
+<!--      </div>-->
       <!-- 关注的商品 列表 -->
-      <div v-show="activeIndex == 1">
-        <product-list
-          @show-all-product=""
-          :item="'关注的商品'"
-          :all-product-list="focusList">
-        </product-list>
-      </div>
+<!--      <div v-show="activeIndex == 1">-->
+<!--        <product-list-->
+<!--          @show-all-product=""-->
+<!--          :item="'关注的商品'"-->
+<!--          :all-product-list="focusList">-->
+<!--        </product-list>-->
+<!--      </div>-->
       <!-- 关注的社团活动 列表 -->
-      <div v-show="activeIndex == 2">
+      <div v-show="activeIndex == 0">
         <my-club/>
       </div>
       <!-- 关注的社团活动 列表 -->
-      <div v-show="activeIndex == 3">
+      <div v-show="activeIndex == 1">
         <product-list
           :item="'关注的社团'"
           :all-product-list="clubList">
@@ -55,23 +55,23 @@ export default {
       activeIndex: 0,
       // showAllProduct:
       focusCategory: [
+        // {
+        //   index: 0,
+        //   item: '我的收藏夹',
+        //   showNum: 0
+        // },
+        // {
+        //   index: 1,
+        //   item: '关注的商品',
+        //   showNum: 0
+        // },
         {
           index: 0,
-          item: '我的收藏夹',
-          showNum: 0
-        },
-        {
-          index: 1,
-          item: '关注的商品',
-          showNum: 0
-        },
-        {
-          index: 2,
           item: '关注的社团',
           showNum: 0
         },
         {
-          index: 3,
+          index: 1,
           item: '关注的社团活动',
           showNum: 0
         }
