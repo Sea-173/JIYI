@@ -42,14 +42,16 @@
         </div>
         <div v-show="activeIndex==1">
           <el-table
-            :data="TeamData"
+            :data="myCommodity"
             border
             stripe
             style="width: 100%;">
-            <el-table-column label="商品id" prop="teamID" sortable width="100px"/>
-            <el-table-column label="商品名称" prop="teamName"/>
-            <el-table-column label="商品价格" prop="teamLeader"/>
-            <el-table-column label="商品描述" prop="teamLeaderName"/>
+            <el-table-column label="商品id" prop="commodityNumber" sortable width="100px"/>
+            <el-table-column label="商品名称" prop="commodityName"/>
+            <el-table-column label="商品价格" prop="commodityPrice"/>
+            <el-table-column label="商品描述" prop="commodityDescription"/>
+            <el-table-column label="卖家姓名" prop="sellerName"/>
+            <el-table-column label="所属团队id" prop="teamID"/>
             <el-table-column label="操作">
               <template #default="scope">
                 <el-button size="small" @click="exit(scope.row)">删除商品</el-button>
@@ -74,6 +76,10 @@ export default {
     return {
       form: {},
       activeIndex: 0,
+      id: window.sessionStorage.getItem('id'),
+      para: {
+        id: window.sessionStorage.getItem('id')
+      },
       ReleaseCommodityCategory: [
         {
           index: 0,
@@ -89,7 +95,8 @@ export default {
           // showNum: 5,
           num: 0
         }
-      ]
+      ],
+      myCommodity: []
     }
   },
   computed: {
@@ -97,20 +104,31 @@ export default {
       return this.ReleaseCommodityCategory[this.activeIndex]
     }
   },
+  created () {
+    this.getUserCommodity()
+  },
   methods: {
+    getUserCommodity () {
+      console.log(this.id)
+      request.get('/CT/getUserCommodities', {
+        params: {'id': this.id}
+      }).then(res => {
+        this.myCommodity = res.commodities
+      })
+      console.log(this.myCommodity)
+    },
     changeActiveIndex: function (index) {
       this.activeIndex = index
       // this.countOrderShowedNum();
     },
     save () {
-      console.log(this.form)
+      this.form.leader = this.id
       request.post('/CT/insertCommodity', this.form).then(res => {
-        console.log(res)
         if (res.code === 200) {
-          this.$message.success('创建成功')
-          this.$router.push('/home')
+          this.$message.success('发布成功')
+          // this.$router.push('/home')
         } else {
-          this.$message.error('创建失败')
+          this.$message.error('发布失败')
         }
       })
     },
