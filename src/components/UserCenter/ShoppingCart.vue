@@ -72,7 +72,8 @@
 				:total-money="totalMoney"
 				:selected-products-num="selectedProductsNum"
 				:is-selected-all="isSelectedAll"
-				@select-all="selectAll(shops)">
+				@select-all="selectAll(shops)"
+        @generate-order="generateOrder">
 			</summary-bar>
 		</div>
 		<!-- 汇总栏 -->
@@ -82,7 +83,8 @@
 				:total-money="totalMoney"
 				:selected-products-num="selectedProductsNum"
 				:is-selected-all="isSelectedAll"
-				@select-all="selectAll(shops)">
+				@select-all="selectAll(shops)"
+        @generate-order="generateOrder">
 			</summary-bar>
 		</div>
   	</user-center-temp>
@@ -251,6 +253,40 @@ export default {
 
   },
   methods: {
+    generateOrder () {
+      console.log('GenerateOrder!')
+      let userID = window.sessionStorage['id']
+      for (var i = 0; i < this.shops.length; i++) {
+        var products = this.shops[i].products
+        for (var j = 0; j < products.length; j++) {
+          if (products[j].isSelected) {
+            console.log('商品id:' + products[j].id + 'userID:' + userID)
+
+            let mydata = {
+              sellerID: this.shops[i].sellerID,
+              customerID: userID,
+              commodityNumber: products[j].id
+            }
+
+            request.post(
+              '/CT/addOrder?sellerID=' + this.shops[i].sellerID +
+              '&customerID=' + userID +
+              '&commodityNumber=' + products[j].id, mydata
+            ).then(res => {
+              console.log(res)
+
+              if (res.code === 200) {
+                console.log('生成订单成功')
+              }
+            })
+
+            console.log('将删除购物车')
+            console.log(products[j])
+            this.deleteProduct(products[j])
+          }
+        }
+      }
+    },
     getMyShoppingCart: function () {
       let mydata = {id: window.sessionStorage['id']}
       console.log('id=' + mydata.id)
@@ -304,6 +340,7 @@ export default {
               products: []
             }
             shop_split.brand = res.commodities[i].sellerName
+            shop_split.sellerID = res.commodities[i].sellerID
 
             var isContinue = 0
             for (var k = 0; k < shopper.length; k++) {
