@@ -6,7 +6,7 @@
 
 ``` bash
 # install dependencies
-npm install
+npm i --legacy-peer-deps
 
 # serve with hot reload at localhost:8081
 npm run dev
